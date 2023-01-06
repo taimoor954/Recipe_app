@@ -1,0 +1,23 @@
+# docker-compose is a command that runs Docker containers based on settings described in a docker-compose.yaml file
+#VERSION OF DOCKER COMPOSE SYNTAX
+version: '3.9'
+
+#docker compose consist of one or more service. Service are use to run our docker file
+
+#build docker file inside cuurent dir thats why we use .
+#port: map port 8000 from local machine to docker container so we can access it inside docker
+#volumes: volume are way of mapping from system to docker container mapping app directory to docker app folder
+#REASON WHY USE VOLUME: if we update sth in local machine then it should be reflect in container real time without making it restart
+#command: use to run server inside docker 
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
